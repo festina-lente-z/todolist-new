@@ -25,13 +25,18 @@ class TodoList extends Component {
             id='inputArea'
             value={this.state.inputValue}
             onChange={this.handleInputChange}
+            ref={(input) => {this.output = input}}
           />
           <button 
             onClick={this.handleBtnClick}>
             submit
           </button>
         </div>
-        <ul>{this.getTodoItem()}</ul>
+        <ul 
+          ref={(ul)=>{this.ul = ul}}
+        >
+          {this.getTodoItem()}
+        </ul>
         {/* 怎么判断要不要执行，没有触发条件的这种就需要执行？ */}
       </Fragment>
     )
@@ -47,14 +52,15 @@ class TodoList extends Component {
       />
     })
   }
-  handleInputChange(e){
+  handleInputChange(){
     // this.state.inputValue = e.target.value;
     // this.setState({
     //   inputValue:e.target.value
     // });
     // console.log(this.state.inputValue);
     // setState里面写了函数就变成异步形式？为什么
-    const inputValue = e.target.value
+    // const inputValue = e.target.value
+    const inputValue = this.output.value
     this.setState(() => ({
       inputValue
     }))
@@ -68,7 +74,10 @@ class TodoList extends Component {
     this.setState((preState) => ({
       list: [...preState.list, preState.inputValue],
       inputValue: ''
-    }))
+    }), ()=>{
+      console.log(this.ul.querySelectorAll('li').length)
+    })
+    
   }
   handleItemDelete(index){
     // immutable
