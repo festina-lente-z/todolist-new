@@ -14,8 +14,12 @@ class TodoList extends Component {
     this.handleBtnClick = this.handleBtnClick.bind(this)
     this.handleItemDelete = this.handleItemDelete.bind(this)
   }
+  // componentWillMount在组件即将被挂载到页面上的时候执行
+  UNSAFE_componentWillMount(){
+    console.log('componentWillMount');
+  }
   render() {
-    //console.log('render');
+    console.log('render');
     return(
       <Fragment>
         {/* 我是注释 */}
@@ -41,6 +45,29 @@ class TodoList extends Component {
       </Fragment>
     )
   }
+  // componentDidMount在组件被挂载到页面之后，自动被执行
+  componentDidMount(){
+    console.log('componentDidMount');
+  }
+  // 组件被更新之前，shouldComponentUpdate会被自动执行
+  shouldComponentUpdate(){
+    console.log('shouldComponentUpdate');
+    return true
+  }
+  /*
+    组件被更新之前，componentWillUpdate会自动执行，但它在shouldComponentUpdate之后执行
+    如果shouldComponentUpdate返回true它才执行
+    如果返回false，这个函数就不会被执行了
+   */
+  UNSAFE_componentWillUpdate(){
+    console.log('componentWillUpdate');
+  }
+
+  // 组件更新完成之后,componentDidUpdate会被执行
+  componentDidUpdate() {
+    console.log('componentDidUpdate');
+  }
+  
   getTodoItem(){
     const { list } = this.state
     return list.map((item, index)=>{

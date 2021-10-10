@@ -20,6 +20,19 @@ class TodoItem extends Component {
       </Fragment>
     )
   }
+  // 当一个组件要从父组件接收参数
+  // 只要父组件的render函数被重新执行了，子组件的这个生命周期函数就会被执行
+  // 如果这个组件第一次存在于父组件中，不会被执行
+  // 如果这个组件之前已经存在于父组件中，才会被执行
+  UNSAFE_componentWillReceiveProps(){
+    console.log('componentWillReceiveProps');
+  }
+
+  // 当这个组件即将被从页面中剔除的时候，会被执行
+  componentWillUnmount(){
+    console.log('componentWillUnmount');
+  }
+
   handleDelete(){
     const {index, handleItemDelete} = this.props
     handleItemDelete(index)

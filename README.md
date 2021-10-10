@@ -48,7 +48,7 @@
    `['div', {id: 'abc'}, ['span', {}, 'bye bye']]`
 7. 比较原始虚拟DOM和新的虚拟DOM的区别，找到区别是span中的内容（极大的提升性能）
 8. 直接操作DOM，改变span中的内容
-### 🤔虚拟DOM优点
+### 🍀虚拟DOM优点
 - 性能提升了
 - 它使跨端应用得以实现。React Native
 ## 🌟虚拟DOM中的Diff（Difference）算法
@@ -60,7 +60,9 @@
 - ref和setState一起用的时候，如果希望页面更新后再去获取DOM，要把获取DOM操作写在setState第二个参数中
 ## React中的生命周期函数
 - 生命周期函数指在某一个时刻组件会自动调用执行的函数
-
+- 在这里constructor函数符合生命周期函数的特点，但它不是react所独有的，因此不归类到生命周期函数之中（constructor函数在组件一被创建的时候自动的调用）
+- componentWillMount在组件即将被挂载到页面上的时候执行
+- 挂载：是指组件第一次被放到页面上的时候
 
 ## Fragment
 - React16版本中，提供了占位符Fragment
