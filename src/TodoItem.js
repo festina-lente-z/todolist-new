@@ -6,7 +6,17 @@ class TodoItem extends Component {
     super(props)
     this.handleDelete = this.handleDelete.bind(this)
   }
+  // 避免组件做无谓的render操作
+  shouldComponentUpdate(nextProps, nextState){
+    if(nextProps.content !== this.props.content){
+      return true;
+    } else {
+      return false;
+    }
+    
+  }
   render(){
+    console.log('child - render');
     const {test,item} = this.props
     return (
       <Fragment>
@@ -25,12 +35,12 @@ class TodoItem extends Component {
   // 如果这个组件第一次存在于父组件中，不会被执行
   // 如果这个组件之前已经存在于父组件中，才会被执行
   UNSAFE_componentWillReceiveProps(){
-    console.log('componentWillReceiveProps');
+    // console.log('componentWillReceiveProps');
   }
 
   // 当这个组件即将被从页面中剔除的时候，会被执行
   componentWillUnmount(){
-    console.log('componentWillUnmount');
+    // console.log('componentWillUnmount');
   }
 
   handleDelete(){

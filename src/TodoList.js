@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import TodoItem from './TodoItem';
+import axios from 'axios';
 
 class TodoList extends Component {
 
@@ -16,10 +17,10 @@ class TodoList extends Component {
   }
   // componentWillMount在组件即将被挂载到页面上的时候执行
   UNSAFE_componentWillMount(){
-    console.log('componentWillMount');
+    // console.log('componentWillMount');
   }
   render() {
-    console.log('render');
+    // console.log('render');
     return(
       <Fragment>
         {/* 我是注释 */}
@@ -47,11 +48,18 @@ class TodoList extends Component {
   }
   // componentDidMount在组件被挂载到页面之后，自动被执行
   componentDidMount(){
-    console.log('componentDidMount');
+    // console.log('componentDidMount');
+    axios.get('/api/todolist')
+      .then((res)=>{
+        this.setState(()=>({
+            list: [...res.data]
+          }));
+      })
+      .catch(()=>{alert('error')})
   }
   // 组件被更新之前，shouldComponentUpdate会被自动执行
   shouldComponentUpdate(){
-    console.log('shouldComponentUpdate');
+    // console.log('shouldComponentUpdate');
     return true
   }
   /*
@@ -60,12 +68,12 @@ class TodoList extends Component {
     如果返回false，这个函数就不会被执行了
    */
   UNSAFE_componentWillUpdate(){
-    console.log('componentWillUpdate');
+    // console.log('componentWillUpdate');
   }
 
   // 组件更新完成之后,componentDidUpdate会被执行
   componentDidUpdate() {
-    console.log('componentDidUpdate');
+    // console.log('componentDidUpdate');
   }
   
   getTodoItem(){
