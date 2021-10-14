@@ -8,4 +8,14 @@
 ## 创建redux中的store
 - `yarn add redux`
 
+## Action和Reducer的编写
+- 当input框发生改变的时候，希望redux数据中的inputValue也跟着变
+  - 第一步创建一个action
+  - 用dispatch把action传给store
+  - store需要把当前store中的数据和action一起转发给Reducers（Redux中的Store会自动转发给Reducers）
+  - 
+
+## 一些疑问
+- 取当前值是用`this.state`还是`store.getState()`？？？
+
 
