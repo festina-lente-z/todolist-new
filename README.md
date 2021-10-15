@@ -32,6 +32,7 @@
 ## Redux中发送异步请求获取数据
 ## 使用Redux-thunk中间件实现ajax数据请求
 ## redux中间件
+![alt redux-data-flow](https://github.com/festina-lente-z/todolist-new/blob/todolist-redux-advanced/public/redux-data-flow.jpg)
 ## 一些疑问
 - 取当前值是用`this.state`还是`store.getState()`？？？
   > 都不是！是在reducer里面进行
