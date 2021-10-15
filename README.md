@@ -33,6 +33,9 @@
 ## 使用Redux-thunk中间件实现ajax数据请求
 ## redux中间件
 ![alt redux-data-flow](https://github.com/festina-lente-z/todolist-new/blob/todolist-redux-advanced/public/redux-data-flow.jpg)
+- 中间件：对dispatch方法的一个升级
+- Redux-thunk是把异步操作放到action中操作
+- react-saga是单独的把异步逻辑拆分出来放到另一个文件里管理
 ## 一些疑问
 - 取当前值是用`this.state`还是`store.getState()`？？？
   > 都不是！是在reducer里面进行
