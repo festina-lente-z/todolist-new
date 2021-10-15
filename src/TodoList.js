@@ -3,9 +3,11 @@ import store from './store/index';
 import { 
   getInputChangeAction,
   getAddItemAction, 
-  getDeleteItemAction
+  getDeleteItemAction,
+  initListAction,
 } from './store/actionCreators';
 import TodoListUI from './TodoListUI';
+import axios from 'axios';
 
 class TodoList extends Component{
   constructor(props){
@@ -28,6 +30,13 @@ class TodoList extends Component{
       handleItemDelete={this.handleItemDelete}
     />)
   }
+  componentDidMount(){
+    axios.get('/list.json').then((res) => {
+      const data = res.data;
+      const action = initListAction(data);
+      store.dispatch(action);
+    })
+  }
   handleStoreChange(){
     // 当感知到store发生变化的时候，旧调用store.getState()方法，从store里面重新取一次数据
     this.setState(store.getState());
@@ -41,6 +50,7 @@ class TodoList extends Component{
     store.dispatch(action);
   }
   handleItemDelete(index){
+    console.log(index);
     const action = getDeleteItemAction(index);
     store.dispatch(action);
   }
