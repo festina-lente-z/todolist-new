@@ -23,9 +23,17 @@
   - `store.dispatch`--派发action，action会传递给store
   - `store.getState`--可以帮我们获取到store中所有的数据内容
   - `store.subscribe`--订阅store的改变，只要发生改变，`store.subscribe`接收的回调函数就会被执行
-  
+## UI组件和容器组件
+- UI组件负责页面的渲染
+- 容器组件负责页面的逻辑 
+## 无状态组件
+- 无状态组件就是一个函数
+- 当一个普通组件只有render函数的时候，我们可以用一个无状态组件来替换这个普通组件
 
 ## 一些疑问
 - 取当前值是用`this.state`还是`store.getState()`？？？
+  > 都不是！是在reducer里面进行
+- react onClick 为什么要用bind，为什么也用箭头函数，除了绑定this还有什么原因？
+- 无状态组件怎么渲染？render？
 
 
