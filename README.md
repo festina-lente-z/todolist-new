@@ -23,9 +23,14 @@
   - `store.dispatch`--派发action，action会传递给store
   - `store.getState`--可以帮我们获取到store中所有的数据内容
   - `store.subscribe`--订阅store的改变，只要发生改变，`store.subscribe`接收的回调函数就会被执行
-  
+
+## UI组件和容器组件
+- UI组件负责页面的渲染
+- 容器组件负责页面的逻辑
+
 
 ## 一些疑问
 - 取当前值是用`this.state`还是`store.getState()`？？？
+  > 都不是！是在reducer里面进行
 
 
