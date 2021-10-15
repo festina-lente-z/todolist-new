@@ -30,7 +30,8 @@
 - 无状态组件就是一个函数
 - 当一个普通组件只有render函数的时候，我们可以用一个无状态组件来替换这个普通组件
 ## Redux中发送异步请求获取数据
-
+## 使用Redux-thunk中间件实现ajax数据请求
+## redux中间件
 ## 一些疑问
 - 取当前值是用`this.state`还是`store.getState()`？？？
   > 都不是！是在reducer里面进行
