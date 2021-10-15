@@ -4,9 +4,10 @@ import {
   getInputChangeAction,
   getAddItemAction, 
   getDeleteItemAction,
-  getTodoList,
+  initListAction,
 } from './store/actionCreators';
 import TodoListUI from './TodoListUI';
+import axios from 'axios';
 
 
 class TodoList extends Component{
@@ -31,8 +32,10 @@ class TodoList extends Component{
     />)
   }
   componentDidMount(){
-    const action = getTodoList();
-    store.dispatch(action); 
+    axios.get('/list.json').then((res) => {
+      const data = res.data;
+      console.log(data);
+    })
   }
   handleStoreChange(){
     // 当感知到store发生变化的时候，旧调用store.getState()方法，从store里面重新取一次数据
