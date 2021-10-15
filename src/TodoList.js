@@ -6,6 +6,11 @@ import {
   List,
 } from 'antd';
 import store from './store/index';
+import {
+  CHANGE_INPUT_VALUE,
+  ADD_TODO_ITEM,
+  DELETE_TODO_ITEM
+} from './store/actionTypes';
 
 const data = [
   'Racing car sprays burning fuel into crowd.',
@@ -46,26 +51,39 @@ class TodoList extends Component{
           style={{marginTop: "10px", width: "300px"}}
           bordered
           dataSource={this.state.list}
-          renderItem={item => <List.Item>{item}</List.Item>}
+          renderItem={(item,index) => 
+            <List.Item
+              key={index}
+              onClick={this.handleItemDelete.bind(this,index)}
+            >
+              {item}
+            </List.Item>
+          }
         />
       </div> 
     )
   }
+  handleStoreChange(){
+    // 当感知到store发生变化的时候，旧调用store.getState()方法，从store里面重新取一次数据
+    this.setState(store.getState());
+  }
   handleInputChange(e){
     const action = {
-      type: 'change_input_value',
+      type: CHANGE_INPUT_VALUE,
       value: e.target.value
     }
     store.dispatch(action);
   }
-  handleStoreChange(){
-    console.log('store changed');
-    // 当感知到store发生变化的时候，旧调用store.getState()方法，从store里面重新取一次数据
-    this.setState(store.getState());
-  }
   handleBtnClick(){
     const action = {
-      type: 'add_todo_item',
+      type: ADD_TODO_ITEM,
+    }
+    store.dispatch(action);
+  }
+  handleItemDelete(index){
+    const action = {
+      type: DELETE_TODO_ITEM,
+      value: index
     }
     store.dispatch(action);
   }

@@ -13,7 +13,7 @@
   - 第一步创建一个action
   - 用dispatch把action传给store
   - store需要把当前store中的数据和action一起转发给Reducers（Redux中的Store会自动转发给Reducers）
-  - 
+- 用`actionCreator`统一管理页面中的`action`
 
 ## 一些疑问
 - 取当前值是用`this.state`还是`store.getState()`？？？
