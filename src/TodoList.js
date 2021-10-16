@@ -1,134 +1,58 @@
-import React, { Component, Fragment } from 'react';
-import TodoItem from './TodoItem';
-import axios from 'axios';
+import React, { Component } from 'react';
+import store from './store/index';
+import { 
+  getInputChangeAction,
+  getAddItemAction, 
+  getDeleteItemAction,
+  getInitList,
+} from './store/actionCreators';
+import TodoListUI from './TodoListUI';
 
-class TodoList extends Component {
 
-  constructor(props) {
+
+class TodoList extends Component{
+  constructor(props){
     super(props);
-    this.state = {
-      inputValue: '', // 存储input框中的内容
-      list: [] // 存储列表中的每一项
-    } // this.state组件的状态
-    this.getTodoItem = this.getTodoItem.bind(this)
-    this.handleInputChange = this.handleInputChange.bind(this)
-    this.handleBtnClick = this.handleBtnClick.bind(this)
-    this.handleItemDelete = this.handleItemDelete.bind(this)
+    this.state = store.getState();
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleBtnClick = this.handleBtnClick.bind(this);
+    // 订阅
+    this.handleStoreChange = this.handleStoreChange.bind(this);
+    this.handleItemDelete = this.handleItemDelete.bind(this);
+    store.subscribe(this.handleStoreChange);
   }
-  // componentWillMount在组件即将被挂载到页面上的时候执行
-  UNSAFE_componentWillMount(){
-    // console.log('componentWillMount');
+  render(){
+    return (<TodoListUI
+      inputValue={this.state.inputValue}
+      list={this.state.list}
+      handleInputChange={this.handleInputChange}
+      handleBtnClick={this.handleBtnClick}
+      handleStoreChange={this.handleStoreChange}
+      handleItemDelete={this.handleItemDelete}
+    />)
   }
-  render() {
-    // console.log('render');
-    return(
-      <Fragment>
-        {/* 我是注释 */}
-        <div>
-          <label htmlFor='inputArea'>输入内容</label>
-          <input 
-            id='inputArea'
-            value={this.state.inputValue}
-            onChange={this.handleInputChange}
-            ref={(input) => {this.output = input}}
-          />
-          <button 
-            onClick={this.handleBtnClick}>
-            submit
-          </button>
-        </div>
-        <ul 
-          ref={(ul)=>{this.ul = ul}}
-        >
-          {this.getTodoItem()}
-        </ul>
-        {/* 怎么判断要不要执行，没有触发条件的这种就需要执行？ */}
-      </Fragment>
-    )
-  }
-  // componentDidMount在组件被挂载到页面之后，自动被执行
   componentDidMount(){
-    // console.log('componentDidMount');
-    axios.get('/api/todolist')
-      .then((res)=>{
-        this.setState(()=>({
-            list: [...res.data]
-          }));
-      })
-      .catch(()=>{alert('error')})
-  }
-  // 组件被更新之前，shouldComponentUpdate会被自动执行
-  shouldComponentUpdate(){
-    // console.log('shouldComponentUpdate');
-    return true
-  }
-  /*
-    组件被更新之前，componentWillUpdate会自动执行，但它在shouldComponentUpdate之后执行
-    如果shouldComponentUpdate返回true它才执行
-    如果返回false，这个函数就不会被执行了
-   */
-  UNSAFE_componentWillUpdate(){
-    // console.log('componentWillUpdate');
-  }
-
-  // 组件更新完成之后,componentDidUpdate会被执行
-  componentDidUpdate() {
-    // console.log('componentDidUpdate');
-  }
-  
-  getTodoItem(){
-    const { list } = this.state
-    return list.map((item, index)=>{
-      return <TodoItem 
-        key={index} 
-        index={index}
-        item={item} 
-        handleItemDelete={this.handleItemDelete} 
-      />
-    })
-  }
-  handleInputChange(){
-    // this.state.inputValue = e.target.value;
-    // this.setState({
-    //   inputValue:e.target.value
-    // });
-    // console.log(this.state.inputValue);
-    // setState里面写了函数就变成异步形式？为什么
-    // const inputValue = e.target.value
-    const inputValue = this.output.value
-    this.setState(() => ({
-      inputValue
-    }))
-  }
-  handleBtnClick(){
-    // const {inputValue,list} = this.state
-    // this.setState({
-    //   list: [...list,inputValue],
-    //   inputValue: ''
-    // })
-    this.setState((preState) => ({
-      list: [...preState.list, preState.inputValue],
-      inputValue: ''
-    }), ()=>{
-      console.log(this.ul.querySelectorAll('li').length)
-    })
+    const action = getInitList();
+    store.dispatch(action);
     
   }
+  handleStoreChange(){
+    // 当感知到store发生变化的时候，旧调用store.getState()方法，从store里面重新取一次数据
+    this.setState(store.getState());
+  }
+  handleInputChange(e){
+    const action = getInputChangeAction(e.target.value);
+    store.dispatch(action);
+  }
+  handleBtnClick(){
+    const action = getAddItemAction();
+    store.dispatch(action);
+  }
   handleItemDelete(index){
-    // immutable
-    // state不允许我们做任何改变
-    // console.log(this)
-    // const list = [...this.state.list]
-    // list.splice(index,1)
-    // this.setState({
-    //   list
-    // })
-    this.setState((preState) => {
-      const list = [...preState.list]
-      list.splice(index,1)
-      return {list}
-    })
+    console.log(index);
+    const action = getDeleteItemAction(index);
+    store.dispatch(action);
   }
 }
 
-export default TodoList
+export default TodoList;
